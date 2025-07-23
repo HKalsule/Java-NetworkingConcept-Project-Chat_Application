@@ -1,5 +1,5 @@
-import java.net.*;       // for ServerSocket and Socket
-import java.io.*;        // for IOException (optional but good)class Server
+import java.io.*;       // for ServerSocket and Socket
+import java.net.*;        // for IOException (optional but good)class Server
 
 class Server
 {   
@@ -11,9 +11,12 @@ class Server
 public Server()
 {
     try {
-        server = new ServerSocket(0);  // 🔥 Let OS assign a free port
+        server = new ServerSocket(0); 
+        int port = server.getLocalPort(); 
         System.out.println("Server is ready to accept connections...");
-        System.out.println("Listening on port: " + server.getLocalPort());
+        try (PrintWriter pw = new PrintWriter("port.txt")) {
+                pw.println(port);
+            }
         socket = server.accept();
         System.out.println("Connection established with client");
 
@@ -77,7 +80,7 @@ public void startReading()
 }
 
     public static void main(String[] args) {
-        System.out.println("This is Server...Strating...");
+        System.out.println("This is Server...Starting...");
         new Server();
     }
 }
